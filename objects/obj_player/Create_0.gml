@@ -1,12 +1,18 @@
+vel = 1.8;
 dirh = 1;
 velh = 0;
 velv = 0;
 grav = 0.4;
 walk = true;
 
+life_max = 50;
+life = life_max;
+lifebar_w = 24;
+lifebar_h = 5;
+
 moving = function(){
 	var _stop = keyboard_check(vk_space);
-	var _move = dirh;
+	var _move = dirh * vel;
 	
 	velh = _move;
 	velv += grav;
@@ -14,14 +20,14 @@ moving = function(){
 	
 	if(_stop && walk){
 		velh = 0;
-		if(alarm[0] < 0){
-			alarm[0] = 60;
+		if(life > 0){
+			life--;
+		} else{
+			walk = false;
 		}
 	} else if(!_stop){
 		walk = true;
-		if(alarm[0] > 1){
-			alarm[0] = 0;
-		}
+		life = life_max;
 	}
 }
 
